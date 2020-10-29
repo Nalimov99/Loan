@@ -2763,6 +2763,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider_mainSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider/mainSlider */ "./src/js/modules/slider/mainSlider.js");
 /* harmony import */ var _modules_slider_miniSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider/miniSlider */ "./src/js/modules/slider/miniSlider.js");
 /* harmony import */ var _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/playVideo */ "./src/js/modules/playVideo.js");
+/* harmony import */ var _modules_differnce__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/differnce */ "./src/js/modules/differnce.js");
+
 
 
 
@@ -2798,9 +2800,88 @@ window.addEventListener('DOMContentLoaded', function () {
     fixBtn: true
   });
   feedSlider.init();
+  var officerOld = new _modules_differnce__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold .officer__card-item');
+  officerOld.init();
+  var officerNew = new _modules_differnce__WEBPACK_IMPORTED_MODULE_3__["default"]('.officernew .officer__card-item');
+  officerNew.init();
   var player = new _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__["default"]('.play', '.overlay');
   player.play();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/differnce.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/differnce.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Differnce; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Differnce =
+/*#__PURE__*/
+function () {
+  function Differnce(cards) {
+    _classCallCheck(this, Differnce);
+
+    this.cards = document.querySelectorAll(cards);
+    this.trigger = this.cards[this.cards.length - 1];
+    this.cardsShown = 0;
+  }
+
+  _createClass(Differnce, [{
+    key: "hideCards",
+    value: function hideCards() {
+      this.cards.forEach(function (elem) {
+        elem.style.display = "none";
+      });
+      this.trigger.style.display = "flex";
+    }
+  }, {
+    key: "bindTriggers",
+    value: function bindTriggers() {
+      var _this = this;
+
+      this.trigger.addEventListener('click', function () {
+        if (_this.cardsShown === _this.cards.length - 2) {
+          _this.cards[_this.cards.length - 2].style.display = "flex";
+
+          _this.cards[_this.cards.length - 2].classList.add('fadeInUp', 'animated');
+
+          _this.trigger.style.display = "none";
+        } else {
+          _this.cards[_this.cardsShown].style.display = "flex";
+
+          _this.cards[_this.cardsShown].classList.add('fadeInUp', 'animated');
+
+          _this.cardsShown++;
+        }
+      });
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.hideCards();
+      this.bindTriggers();
+    }
+  }]);
+
+  return Differnce;
+}();
+
+
 
 /***/ }),
 
