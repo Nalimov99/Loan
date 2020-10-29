@@ -3,38 +3,65 @@ import Slider from './slider';
 export default class MainSlider extends Slider{
     constructor(next, logoBtn) {
         super(next, logoBtn);
-        this.showUp = document.querySelector('.hanson');
+        this.show = document.querySelector('.hanson');
         this.showUpIndex=2;
-        this.showUp.style.opacity='0';
-
+        this.show.style.opacity='0';
     }
     
-
-
-    showSlide(n = 0) {
-        super.showSlide(n);
- 
+    showUp() {
         if(this.slideIndex === this.showUpIndex) {
-            if(this.showUp.classList.contains('animated')) {
-                this.showUp.classList.remove('slideInUp');
+            if(this.show.classList.contains('animated')) {
+                this.show.classList.remove('slideInUp');
             } else {
                 setTimeout(() => {
-                    this.showUp.style.opacity = '1';
-                    this.showUp.classList.add('animated', 'slideInUp'); 
+                this.show.style.opacity = '1';
+                this.show.classList.add('animated', 'slideInUp'); 
                 }, 3000);
             }
         }
-
+    }
+    hideSlides() {
+        this.slides.forEach((item) => {
+            item.style.display = "none";
+        });
     }
 
-    render() {
-        super.render();
+    showSlide(n = 0) {
+        if(n>this.slides.length - 1) {
+            n=0;
+            this.slideIndex=n;
+        }
+        if(n<0) {
+            n=this.slides.length - 1;
+            this.slideIndex=n;
+        }
+        this.hideSlides();
+        this.slides[n].style.display="block";
+        this.showUp();
+    }
+    
+
+    BindLogo() {
         this.logoBtn.forEach(element => {
             element.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.showSlide();
                 this.slideIndex = 0;
             });
+        });   
+    }
+    
+    bindTrigger() {
+        this.next.forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showSlide(++this.slideIndex);
+            });
         });
+    }
+
+    init() {
+        this.BindLogo();
+        this.bindTrigger();
     }
 }
