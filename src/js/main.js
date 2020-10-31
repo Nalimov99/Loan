@@ -2,6 +2,7 @@ import mainSlider from './modules/slider/mainSlider';
 import miniSlider from './modules/slider/miniSlider';
 import VideoPlayer from './modules/playVideo';
 import Differnce from './modules/differnce';
+import Forms from './modules/services/forms';
 
 
 
@@ -46,5 +47,11 @@ window.addEventListener('DOMContentLoaded', () => {
     const player = new VideoPlayer('.play', '.overlay');
     player.play();
 
+
+    const joinForm = new Forms('.join__evolution form', '#fff');
+    joinForm.init();
+
+    const scheduleForm = new Forms('.schedule__form form', '#000');
+    scheduleForm.init();
 
 });
