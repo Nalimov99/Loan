@@ -1,5 +1,5 @@
 export default class Differnce {
-    constructor(cards) {
+    constructor(cards = null) {
         this.cards = document.querySelectorAll(cards);
         this.trigger = this.cards[this.cards.length - 1];
         this.cardsShown = 0;
@@ -27,7 +27,11 @@ export default class Differnce {
     }
 
     init() {
-        this.hideCards();
-        this.bindTriggers();
+        try {
+            this.hideCards();
+            this.bindTriggers();
+        } catch (error) {
+            
+        }
     }
 }

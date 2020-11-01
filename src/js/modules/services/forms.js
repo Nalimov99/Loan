@@ -2,16 +2,20 @@ import postData from './request';
 
 
 export default class Forms {
-    constructor(form, messageColor) {
-        this.form = document.querySelector(form);
-        this.message = {
-            loading: 'Загрузка...',
-            done: 'Спасибо, скоро с вами свяжемся!',
-            failure: 'Произошла ошибка'
-        };
-        this.inputs = this.form.querySelectorAll('input');
-        this.path = 'assets/question.php';
-        this.messageColor = messageColor;
+    constructor(form = null, messageColor = "") {
+        try {
+            this.form = document.querySelector(form);
+            this.message = {
+                loading: 'Загрузка...',
+                done: 'Спасибо, скоро с вами свяжемся!',
+                failure: 'Произошла ошибка'
+            };
+            this.inputs = this.form.querySelectorAll('input');
+            this.path = 'assets/question.php';
+            this.messageColor = messageColor;
+        } catch (error) {
+            
+        }
     }
 
     clearInputs() {
@@ -106,32 +110,34 @@ export default class Forms {
 
 
     init() {
-        this.checkMailInputs();
-        this.phoneMask();
-        this.form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(this.form);
-            this.createMessage(this.message.loading);
-            postData(this.path, formData)
-            
-            .then(() => {
-                document.querySelector('.fetch---Notification').remove();
-                this.createMessage(this.message.done);
-            })
-            .catch(() => {
-                document.querySelector('.fetch---Notification').remove();
-                this.createMessage(this.message.failure);
-
-            })
-            .finally(() => {
-                this.clearInputs();
-                setTimeout(() => {
+        if(this.form) {
+            this.checkMailInputs();
+            this.phoneMask();
+            this.form.addEventListener('submit', (e) => {
+                e.preventDefault();
+    
+                const formData = new FormData(this.form);
+                this.createMessage(this.message.loading);
+                postData(this.path, formData)
+                
+                .then(() => {
                     document.querySelector('.fetch---Notification').remove();
-                    this.form.style.display = "block";
-                }, 6000);
+                    this.createMessage(this.message.done);
+                })
+                .catch(() => {
+                    document.querySelector('.fetch---Notification').remove();
+                    this.createMessage(this.message.failure);
+    
+                })
+                .finally(() => {
+                    this.clearInputs();
+                    setTimeout(() => {
+                        document.querySelector('.fetch---Notification').remove();
+                        this.form.style.display = "block";
+                    }, 6000);
+                });
+            
             });
-        
-        });
+        } 
     }
 }

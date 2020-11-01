@@ -5022,6 +5022,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 window.addEventListener('DOMContentLoaded', function () {
   var PageSlider = new _modules_slider_mainSlider__WEBPACK_IMPORTED_MODULE_0__["default"]({
     container: ".page",
@@ -5037,6 +5038,14 @@ window.addEventListener('DOMContentLoaded', function () {
     animate: true
   });
   showUpSlider.init();
+  var modulePageSlide = new _modules_slider_mainSlider__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    container: '.moduleapp',
+    next: '.sidecontrol__controls .next',
+    logoBtn: '.sidecontrol > a',
+    extraNext: '.module__info-controls .next',
+    extraPrev: '.module__info-controls .prev'
+  });
+  modulePageSlide.init();
   var moduleSlider = new _modules_slider_miniSlider__WEBPACK_IMPORTED_MODULE_1__["default"]({
     container: '.modules__content-slider',
     prev: '.modules__info-btns .slick-prev',
@@ -5091,7 +5100,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Differnce =
 /*#__PURE__*/
 function () {
-  function Differnce(cards) {
+  function Differnce() {
+    var cards = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
     _classCallCheck(this, Differnce);
 
     this.cards = document.querySelectorAll(cards);
@@ -5131,8 +5142,10 @@ function () {
   }, {
     key: "init",
     value: function init() {
-      this.hideCards();
-      this.bindTriggers();
+      try {
+        this.hideCards();
+        this.bindTriggers();
+      } catch (error) {}
     }
   }]);
 
@@ -5272,18 +5285,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Forms =
 /*#__PURE__*/
 function () {
-  function Forms(form, messageColor) {
+  function Forms() {
+    var form = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var messageColor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+
     _classCallCheck(this, Forms);
 
-    this.form = document.querySelector(form);
-    this.message = {
-      loading: 'Загрузка...',
-      done: 'Спасибо, скоро с вами свяжемся!',
-      failure: 'Произошла ошибка'
-    };
-    this.inputs = this.form.querySelectorAll('input');
-    this.path = 'assets/question.php';
-    this.messageColor = messageColor;
+    try {
+      this.form = document.querySelector(form);
+      this.message = {
+        loading: 'Загрузка...',
+        done: 'Спасибо, скоро с вами свяжемся!',
+        failure: 'Произошла ошибка'
+      };
+      this.inputs = this.form.querySelectorAll('input');
+      this.path = 'assets/question.php';
+      this.messageColor = messageColor;
+    } catch (error) {}
   }
 
   _createClass(Forms, [{
@@ -5368,31 +5386,33 @@ function () {
     value: function init() {
       var _this = this;
 
-      this.checkMailInputs();
-      this.phoneMask();
-      this.form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var formData = new FormData(_this.form);
+      if (this.form) {
+        this.checkMailInputs();
+        this.phoneMask();
+        this.form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var formData = new FormData(_this.form);
 
-        _this.createMessage(_this.message.loading);
+          _this.createMessage(_this.message.loading);
 
-        Object(_request__WEBPACK_IMPORTED_MODULE_6__["default"])(_this.path, formData).then(function () {
-          document.querySelector('.fetch---Notification').remove();
-
-          _this.createMessage(_this.message.done);
-        }).catch(function () {
-          document.querySelector('.fetch---Notification').remove();
-
-          _this.createMessage(_this.message.failure);
-        }).finally(function () {
-          _this.clearInputs();
-
-          setTimeout(function () {
+          Object(_request__WEBPACK_IMPORTED_MODULE_6__["default"])(_this.path, formData).then(function () {
             document.querySelector('.fetch---Notification').remove();
-            _this.form.style.display = "block";
-          }, 6000);
+
+            _this.createMessage(_this.message.done);
+          }).catch(function () {
+            document.querySelector('.fetch---Notification').remove();
+
+            _this.createMessage(_this.message.failure);
+          }).finally(function () {
+            _this.clearInputs();
+
+            setTimeout(function () {
+              document.querySelector('.fetch---Notification').remove();
+              _this.form.style.display = "block";
+            }, 6000);
+          });
         });
-      });
+      }
     }
   }]);
 
@@ -5524,9 +5544,13 @@ function (_Slider) {
     _classCallCheck(this, MainSlider);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainSlider).call(this, next, logoBtn));
-    _this.show = document.querySelector('.hanson');
-    _this.showUpIndex = 2;
-    _this.show.style.opacity = '0';
+
+    try {
+      _this.show = document.querySelector('.hanson');
+      _this.showUpIndex = 2;
+      _this.show.style.opacity = '0';
+    } catch (error) {}
+
     return _this;
   }
 
@@ -5571,7 +5595,10 @@ function (_Slider) {
 
       this.hideSlides();
       this.slides[n].style.display = "block";
-      this.showUp();
+
+      if (this.show) {
+        this.showUp();
+      }
     }
   }, {
     key: "BindLogo",
@@ -5590,10 +5617,10 @@ function (_Slider) {
     }
   }, {
     key: "bindTrigger",
-    value: function bindTrigger() {
+    value: function bindTrigger(trigger) {
       var _this4 = this;
 
-      this.next.forEach(function (element) {
+      trigger.forEach(function (element) {
         element.addEventListener('click', function (e) {
           e.preventDefault();
 
@@ -5602,10 +5629,30 @@ function (_Slider) {
       });
     }
   }, {
+    key: "bindPrevTrigger",
+    value: function bindPrevTrigger(trigger) {
+      var _this5 = this;
+
+      trigger.forEach(function (element) {
+        element.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          _this5.showSlide(--_this5.slideIndex);
+        });
+      });
+    }
+  }, {
     key: "init",
     value: function init() {
-      this.BindLogo();
-      this.bindTrigger();
+      if (this.container) {
+        this.BindLogo();
+        this.bindTrigger(this.next);
+
+        if (this.extraNext && this.extraPrev) {
+          this.bindTrigger(this.extraNext);
+          this.bindPrevTrigger(this.extraPrev);
+        }
+      }
     }
   }]);
 
@@ -5686,7 +5733,11 @@ function (_slider) {
     _classCallCheck(this, miniSlider);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(miniSlider).call(this, container, next, prev, animate, autoplay, activeClass, fixBtn));
-    _this.container.style.cssText = "\n        display: flex;\n        flex-wrap: wrap;\n        align-items: start;\n        overflow: hidden;\n        ";
+
+    try {
+      _this.container.style.cssText = "\n            display: flex;\n            flex-wrap: wrap;\n            align-items: start;\n            overflow: hidden;\n            ";
+    } catch (error) {}
+
     _this.next = _this.next[0];
     _this.prev = _this.prev[0];
     return _this;
@@ -5779,14 +5830,16 @@ function (_slider) {
   }, {
     key: "init",
     value: function init() {
-      this.bindTriggers();
-      this.cardActive();
+      if (this.container) {
+        this.bindTriggers();
+        this.cardActive();
 
-      if (this.autoplay) {
-        this.autoplayFunc();
+        if (this.autoplay) {
+          this.autoplayFunc();
+        }
+
+        this.fixBtnInSlides();
       }
-
-      this.fixBtnInSlides();
     }
   }]);
 
@@ -5826,15 +5879,25 @@ var Slider = function Slider() {
       _ref$activeClass = _ref.activeClass,
       activeClass = _ref$activeClass === void 0 ? null : _ref$activeClass,
       _ref$fixBtn = _ref.fixBtn,
-      fixBtn = _ref$fixBtn === void 0 ? false : _ref$fixBtn;
+      fixBtn = _ref$fixBtn === void 0 ? false : _ref$fixBtn,
+      _ref$extraNext = _ref.extraNext,
+      extraNext = _ref$extraNext === void 0 ? null : _ref$extraNext,
+      _ref$extraPrev = _ref.extraPrev,
+      extraPrev = _ref$extraPrev === void 0 ? null : _ref$extraPrev;
 
   _classCallCheck(this, Slider);
 
   this.logoBtn = document.querySelectorAll(logoBtn);
   this.container = document.querySelector(container);
-  this.slides = this.container.children;
+
+  try {
+    this.slides = this.container.children;
+  } catch (error) {}
+
   this.next = document.querySelectorAll(next);
   this.prev = document.querySelectorAll(prev);
+  this.extraNext = document.querySelectorAll(extraNext);
+  this.extraPrev = document.querySelectorAll(extraPrev);
   this.animate = animate;
   this.autoplay = autoplay;
   this.activeClass = activeClass;

@@ -3,9 +3,13 @@ import Slider from './slider';
 export default class MainSlider extends Slider{
     constructor(next, logoBtn) {
         super(next, logoBtn);
-        this.show = document.querySelector('.hanson');
-        this.showUpIndex=2;
-        this.show.style.opacity='0';
+        try {
+            this.show = document.querySelector('.hanson');
+            this.showUpIndex=2;
+            this.show.style.opacity='0';
+        } catch (error) {
+            
+        }
     }
     
     showUp() {
@@ -37,7 +41,9 @@ export default class MainSlider extends Slider{
         }
         this.hideSlides();
         this.slides[n].style.display="block";
-        this.showUp();
+        if(this.show) {
+            this.showUp();
+        }
     }
     
 
@@ -51,8 +57,8 @@ export default class MainSlider extends Slider{
         });   
     }
     
-    bindTrigger() {
-        this.next.forEach(element => {
+    bindTrigger(trigger) {
+        trigger.forEach(element => {
             element.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.showSlide(++this.slideIndex);
@@ -60,8 +66,24 @@ export default class MainSlider extends Slider{
         });
     }
 
+    bindPrevTrigger(trigger) {
+        trigger.forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showSlide(--this.slideIndex);
+            });
+        });
+    }
+
     init() {
-        this.BindLogo();
-        this.bindTrigger();
+        if(this.container) {
+            this.BindLogo();
+            this.bindTrigger(this.next);
+
+            if(this.extraNext && this.extraPrev) {
+                this.bindTrigger(this.extraNext);
+                this.bindPrevTrigger(this.extraPrev);
+            }
+        } 
     }
 }

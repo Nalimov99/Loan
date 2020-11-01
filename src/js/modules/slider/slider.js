@@ -7,14 +7,22 @@ export default class Slider {
         animate = null,
         autoplay = false,
         activeClass = null,
-        fixBtn = false} = {}) {
+        fixBtn = false,
+        extraNext = null,
+        extraPrev = null} = {}) {
 
 
         this.logoBtn = document.querySelectorAll(logoBtn);
         this.container=document.querySelector(container);
-        this.slides=this.container.children;
+        try {
+            this.slides=this.container.children;
+        } catch (error) {
+            
+        }
         this.next=document.querySelectorAll(next);
         this.prev = document.querySelectorAll(prev);
+        this.extraNext=document.querySelectorAll(extraNext);
+        this.extraPrev = document.querySelectorAll(extraPrev);
         this.animate = animate;
         this.autoplay = autoplay;
         this.activeClass = activeClass;

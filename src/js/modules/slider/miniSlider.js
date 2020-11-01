@@ -3,12 +3,16 @@ import slider from './slider';
 export default class miniSlider extends slider {
     constructor(container, next, prev, animate, autoplay, activeClass, fixBtn) {
         super(container, next, prev, animate, autoplay, activeClass, fixBtn);
-        this.container.style.cssText = `
-        display: flex;
-        flex-wrap: wrap;
-        align-items: start;
-        overflow: hidden;
-        `;
+        try {
+            this.container.style.cssText = `
+            display: flex;
+            flex-wrap: wrap;
+            align-items: start;
+            overflow: hidden;
+            `;
+        } catch (error) {
+            
+        }
         this.next = this.next[0];
         this.prev = this.prev[0];
     }
@@ -77,11 +81,13 @@ export default class miniSlider extends slider {
     }
 
     init() {
-        this.bindTriggers();
-        this.cardActive();
-        if(this.autoplay) {
-            this.autoplayFunc();
-        }
-        this.fixBtnInSlides();
+        if(this.container) {
+            this.bindTriggers();
+            this.cardActive();
+            if(this.autoplay) {
+                this.autoplayFunc();
+            }
+            this.fixBtnInSlides();
+        } 
     }
 }

@@ -3,6 +3,7 @@ import miniSlider from './modules/slider/miniSlider';
 import VideoPlayer from './modules/playVideo';
 import Differnce from './modules/differnce';
 import Forms from './modules/services/forms';
+import MainSlider from './modules/slider/mainSlider';
 
 
 
@@ -18,6 +19,14 @@ window.addEventListener('DOMContentLoaded', () => {
         animate: true
     });
     showUpSlider.init();
+
+    const modulePageSlide = new MainSlider({
+        container: '.moduleapp', 
+        next: '.sidecontrol__controls .next', 
+        logoBtn: '.sidecontrol > a',
+        extraNext: '.module__info-controls .next',
+        extraPrev: '.module__info-controls .prev'});
+    modulePageSlide.init();
 
     const moduleSlider = new miniSlider({
         container: '.modules__content-slider',
