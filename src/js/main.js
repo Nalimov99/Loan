@@ -53,8 +53,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const officerNew = new Differnce('.officernew .officer__card-item');
     officerNew.init();
 
-    const player = new VideoPlayer('.play', '.overlay');
+    const player = new VideoPlayer('.showup .play', '.overlay');
     player.play();
+    const modulePlayer = new VideoPlayer('.module__video-item .play', '.overlay', true);
+    modulePlayer.play();
 
 
     const joinForm = new Forms('.join__evolution form', '#fff');
