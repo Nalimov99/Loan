@@ -5079,6 +5079,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/playVideo */ "./src/js/modules/playVideo.js");
 /* harmony import */ var _modules_differnce__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/differnce */ "./src/js/modules/differnce.js");
 /* harmony import */ var _modules_services_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/services/forms */ "./src/js/modules/services/forms.js");
+/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+/* harmony import */ var _modules_download__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/download */ "./src/js/modules/download.js");
+
+
 
 
 
@@ -5137,7 +5141,93 @@ window.addEventListener('DOMContentLoaded', function () {
   joinForm.init();
   var scheduleForm = new _modules_services_forms__WEBPACK_IMPORTED_MODULE_4__["default"]('.schedule__form form', '#000');
   scheduleForm.init();
+  var accordion = new _modules_accordion__WEBPACK_IMPORTED_MODULE_5__["default"]('.module__info-show', '.msg');
+  accordion.init();
+  new _modules_download__WEBPACK_IMPORTED_MODULE_6__["default"]('.download', 'assets/img/mainbg.jpg').init();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/accordion.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordion.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Accordion; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Accordion =
+/*#__PURE__*/
+function () {
+  function Accordion(triggers, message) {
+    _classCallCheck(this, Accordion);
+
+    this.triggers = document.querySelectorAll(triggers);
+    this.message = document.querySelectorAll(message);
+  }
+
+  _createClass(Accordion, [{
+    key: "bindTriggers",
+    value: function bindTriggers() {
+      var _this = this;
+
+      this.triggers.forEach(function (element, i) {
+        element.addEventListener('click', function () {
+          var hr = _this.message[i].parentNode.querySelectorAll('hr')[1];
+
+          var modeleInfo = _this.message[i].parentNode.querySelector('.module__info-book');
+
+          _this.message[i].classList.add('animated');
+
+          if (getComputedStyle(_this.message[i], null).display == "none") {
+            _this.message[i].style.display = "block";
+            _this.message[i].style.marginTop = "10px";
+
+            _this.message[i].classList.remove('zoomOut', 'fast');
+
+            _this.message[i].classList.add('zoomIn');
+
+            hr.style.marginTop = '10px';
+            modeleInfo.style.paddingTop = "13px";
+          } else {
+            _this.message[i].classList.remove('zoomIn');
+
+            _this.message[i].classList.add('zoomOut', 'fast');
+
+            _this.message[i].addEventListener('animationend', function () {
+              if (_this.message[i].classList.contains('zoomOut')) {
+                _this.message[i].style.display = "none";
+                hr.style.marginTop = '25px';
+                modeleInfo.style.paddingTop = "24px";
+              }
+            });
+          }
+        });
+      });
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.bindTriggers();
+    }
+  }]);
+
+  return Accordion;
+}();
+
+
 
 /***/ }),
 
@@ -5214,6 +5304,73 @@ function () {
   }]);
 
   return Differnce;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/modules/download.js":
+/*!************************************!*\
+  !*** ./src/js/modules/download.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Download; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Download =
+/*#__PURE__*/
+function () {
+  function Download(triggers, path) {
+    _classCallCheck(this, Download);
+
+    this.triggers = document.querySelectorAll(triggers);
+    this.path = path;
+  }
+
+  _createClass(Download, [{
+    key: "createDownload",
+    value: function createDownload(url) {
+      var a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', 'picture');
+      a.style.display = "none";
+      a.click();
+      a.remove();
+    }
+  }, {
+    key: "bindTriggers",
+    value: function bindTriggers() {
+      var _this = this;
+
+      this.triggers.forEach(function (trigger) {
+        trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          _this.createDownload(_this.path);
+        });
+      });
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.bindTriggers();
+    }
+  }]);
+
+  return Download;
 }();
 
 

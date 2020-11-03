@@ -4,6 +4,8 @@ import VideoPlayer from './modules/playVideo';
 import Differnce from './modules/differnce';
 import Forms from './modules/services/forms';
 import MainSlider from './modules/slider/mainSlider';
+import Accordion from './modules/accordion';
+import Download from './modules/download';
 
 
 
@@ -64,5 +66,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const scheduleForm = new Forms('.schedule__form form', '#000');
     scheduleForm.init();
+
+
+    const accordion = new Accordion('.module__info-show', '.msg');
+    accordion.init();
+
+    new Download('.download', 'assets/img/mainbg.jpg').init();
 
 });
